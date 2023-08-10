@@ -18,8 +18,7 @@ async fn actix_web(
     tracing::info!("Registering application configuration");
     let config = move |conf: &mut ServiceConfig| {
         conf.app_data(pool)
-            .service(hello_world)
-            .service(version);
+            .service(health);
     };
 
     Ok(config.into())
