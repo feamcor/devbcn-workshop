@@ -12,13 +12,12 @@ async fn actix_web(
     pool.execute(include_str!("../../db/schema.sql"))
         .await
         .map_err(CustomError::new)?;
-    tracing::info!("Wrapping database pool on application data");
-    let pool = actix_web::web::Data::new(pool);
-    tracing::info!("Registering application configuration");
+    let film_repository = api_lib::film_repository::PostgresFilmRepository::new(pool);
+    let film_repository = actix_web::web::Data::new(film_repository);
     let configuration = move |c: &mut ServiceConfig| {
-        c.app_data(pool)
-            .configure(api_lib::health::service)
-            .configure(api_lib::films::service);
+        c.app_data(film_repository)
+         .configure(api_lib::health::service)
+         .configure(api_lib::films::service);
     };
 
     Ok(configuration.into())
