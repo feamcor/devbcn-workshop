@@ -21,7 +21,7 @@ impl FilmRepository for PostgresFilmRepository {
     }
 
     async fn get_film(&self, film_id: &uuid::Uuid) -> FilmResult<Film> {
-        sqlx::query_as::<_, Film>(r#"SELECT id, title, director, year, poster, created_at, updated_at, FROM films WHERE id=$1"#,)
+        sqlx::query_as::<_, Film>(r#"SELECT id, title, director, year, poster, created_at, updated_at FROM films WHERE id=$1"#,)
             .bind(film_id)
             .fetch_one(&self.pool)
             .await
