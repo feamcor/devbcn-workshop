@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Default)]
-#[cfg_attr(feature="backend", derive(sqlx::FrontRow))]
+#[cfg_attr(feature="backend", derive(sqlx::FromRow))]
 pub struct Film {
     pub id: uuid::Uuid,
     pub title: String,
@@ -14,7 +14,7 @@ pub struct Film {
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Default)]
-#[cfg_attr(feature="backend", derive(sqlx::FrontRow))]
+#[cfg_attr(feature="backend", derive(sqlx::FromRow))]
 pub struct CreateFilm {
     pub title: String,
     pub director: String,
