@@ -10,7 +10,7 @@ actix-web = "4.3.1"
 async-trait = "0.1.72"
 serde = "1.0.183"
 serde_json = "1.0.104"
-shared = { path="../../shared" }
+shared = { path="../../shared", features=["backend"] }
 sqlx = { version="0.7.1", default-features=false, features=["runtime-tokio", "tls-native-tls", "macros", "postgres", "uuid", "chrono", "json"] }
 tracing = "0.1.37"
 uuid = { version="1.4.1", features=["serde", "v4", "js"] }
