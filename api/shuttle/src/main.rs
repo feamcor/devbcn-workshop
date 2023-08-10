@@ -3,7 +3,6 @@ use shuttle_actix_web::ShuttleActixWeb;
 use shuttle_runtime::CustomError;
 use sqlx::Executor;
 use sqlx::Pool;
-use api_lib::health::*;
 
 #[shuttle_runtime::main]
 async fn actix_web(
@@ -16,10 +15,9 @@ async fn actix_web(
     tracing::info!("Wrapping database pool on application data");
     let pool = actix_web::web::Data::new(pool);
     tracing::info!("Registering application configuration");
-    let config = move |conf: &mut ServiceConfig| {
-        conf.app_data(pool)
-            .service(health);
+    let configuration = move |c: &mut ServiceConfig| {
+        c.app_data(pool).configure(api_lib::health::service);
     };
 
-    Ok(config.into())
+    Ok(configuration.into())
 }
