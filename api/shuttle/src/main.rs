@@ -16,7 +16,9 @@ async fn actix_web(
     let pool = actix_web::web::Data::new(pool);
     tracing::info!("Registering application configuration");
     let configuration = move |c: &mut ServiceConfig| {
-        c.app_data(pool).configure(api_lib::health::service);
+        c.app_data(pool)
+            .configure(api_lib::health::service)
+            .configure(api_lib::films::service);
     };
 
     Ok(configuration.into())
